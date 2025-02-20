@@ -7,8 +7,7 @@ Bem-vindo a API para Gestão de Eventos, um projeto desenvolvido com objetivo de
   <a href="#-tecnologias-utilizadas">🧠 Como Usar</a>
 </p>
 
-![alt text](image.png)
-
+![image](https://github.com/user-attachments/assets/7387498d-40eb-468c-8032-11dc8905acd1)
 
 # 🚧 Em construção... 🚧
 
