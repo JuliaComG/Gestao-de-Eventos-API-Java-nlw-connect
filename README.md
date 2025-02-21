@@ -166,7 +166,7 @@ Assim ele criará a `Network` (rede), o `Container` e faz o upload do `MySQL` pa
 
 > Para ver o diagrama vá em Database > Reverse Enginneer > Next > Next > selecione o banco desejado > Next > Next > Execute > Next > Finish
 
-### Conectando Código com o Banco de Dados
+### 🔌 Conectando Código com o Banco de Dados
 
 Requisito: Dependências do `Spring Data JPA`
 Caminho: `\events\src\main\resources`
@@ -194,7 +194,178 @@ spring.datasource.url = jdbc:mysql://localhost:3306/db_events
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQLDialect
  ```
 Resultado esperado: Conexões criadas com o BD
+
 ![connection db](https://github.com/user-attachments/assets/0623fe35-65e2-40fa-b7c5-8e295791ae88)
+
+## Criando Packages
+
+Então vamos criar os pacotes:
+- Controller
+- Service
+- Repository
+- Model
+
+![alt text](calsses.png)
+
+Primeiro temos que estar no caminho correto: `\events\src\main\java\br\com\nlw\events`
+
+E crie um novo pacote:
+![alt text](image.png)
+
+- `.controller`
+- `.service`
+- `.repo`
+- `.model`
+
+Cada pacote irá criar uma nova pasta dentro do pacote `br.com.nlw.events`
+
+![](image-1.png)
+
+## Criando Classes
+
+### Model
+
+Objetivos:
+- Declarar variáveis.
+- Relacionar variáveis com o BD.
+- Criar métodos getters e setters.
+
+Tipo: `Java Class`
+
+Nome do arquivo: `Event.java`
+
+1. Declarar variáveis. Veja na tabela do BD, o nome das colunas e seus tipos. Para o código manter a mesma nomenclatura, para que não tenha erros. Mas use a anotação utilizada pelo Java. `primeiraLetraMaiusculaEORestanteMinuscula`
+
+  Veja o Exemplo:
+
+  ![alt text](<Design sem nome (5).png>)
+
+  Possível problema:
+
+  ![alt text](image-2.png)
+
+  Tipo de variável não existente, passe o mouse sob o erro e Importe a classe.
+
+2. "Anotar" que a essa classe corresponde a uma tabela `tbl_event` do BD.
+
+  ```java
+  @Entity
+  @Table (name = "tbl_event")
+  ```
+
+3. Indicar cada variável que é uma coluna da tabela.
+
+  ```java
+  @Column (name = "pretty_name", length = 50, nullable = false, unique = true)
+  private String prettyName;
+  ```
+
+  Para a chave primária, use:
+
+  ```java
+  @Id
+  @GeneratedValue (strategy = GenerationType.IDENTITY)
+  @Column (name = "even_id")
+  private Integer eventId;
+  ```
+
+4. Criar os métodos getters e setters para cada variável.
+
+Vá no menu Code > Generate >
+
+![alt text](image-3.png)
+
+.> Getter and Setter >
+
+![alt text](image-4.png)
+
+.> Selecionar todas as variáveis > Ok
+
+![alt text](image-5.png)
+
+Ele irá criar os métodos getters e setters para todas as variáveis, semelhante ao exemplo abaixo:
+
+```java
+    public Integer getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Integer eventId) {
+        this.eventId = eventId;
+    }
+```
+
+### Repository (Repo)
+
+Objetivos:
+
+Tipo: `Interface`
+
+Nome do arquivo: `EventRepo.java`
+
+1. Adicione a extensão `CrudRepository`. Ela pede dois parâmetros:
+   - O que vou armazenar. No caso, a classe `Event`. 
+   - Tipo da chave primária.
+   
+```java
+public interface EventRepo extends CrudRepository <Event, Integer> {
+  //aqui vai ficar os métodos extras que o CrudRepository não tem
+}
+```	
+
+Com o CrudRepository, você tem acesso aos métodos:
+
+- Create (Criar):
+  - save(entity): Salva uma entidade no banco de dados (insere ou atualiza, se já existir).
+
+- Read (Ler):
+  - findById(id): Busca uma entidade pelo seu ID.
+  - findAll(): Retorna todas as entidades.
+  - existsById(id): Verifica se uma entidade com o ID especificado existe.
+
+- Update (Atualizar):
+  - save(entity): Atualiza uma entidade existente no banco de dados.
+
+- Delete (Excluir):
+  - deleteById(id): Remove uma entidade pelo seu ID.
+  - delete(entity): Remove uma entidade específica.
+  - deleteAll(): Remove todas as entidades.
+
+### Service
+
+Objetivos:
+- Regras de negócio
+- Cadastrar
+- Recuperar todo mundo
+- Recuperar pelo `prettyName`
+
+Tipo: `Java Class`
+
+Nome do arquivo: `EventService.java`
+
+
+1. Adicione a anotação `Service`.
+```JAVA 
+@Service
+public class EventService {
+}
+```
+Mas por que? Porque o Spring vai gerenciar a criação dessa classe.
+
+2. Chame a Classe `EventRepo` (que acabamos de criar no arquivo anterior)
+
+```JAVA 
+private EventRepo eventRepo;
+```
+
+3. Coloque a anotação `Autowired` acima do `eventRepo`
+
+```JAVA 
+@Autowired
+private EventRepo eventRepo;
+```
+
+#### Autowired
 
 ## 📋 Rotas da API
 
