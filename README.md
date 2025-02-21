@@ -188,7 +188,7 @@ spring.datasource.password = root
 // Máquina: localhost <- A máquina que está rodando o banco de dados
 // Porta: 3336 <- Porta que o banco de dados está escutando (OPCIONAL)
 //Nome da base de dados: db_events
-spring.datasource.url = jdbc:mysql://localhost:3336/db_events
+spring.datasource.url = jdbc:mysql://localhost:3306/db_events
 
 // Configuração do JPA "Qual dialeto estou usando?" = MySQL
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQLDialect
@@ -287,6 +287,3 @@ Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em c
 ### 💖 Créditos e Agradecimentos 
 
 Quero agradecer à [Rocketseat](https://app.rocketseat.com.br/?type=ALL) pelo conhecimento compartilhado e pelas oportunidades proporcionadas por meio do evento [NLW Connect](https://www.rocketseat.com.br/eventos/nlw?utm_source=platform&utm_medium=organic&utm_campaign=lead&utm_term=nlw_19&utm_content=notificacao_plataforma-lp_inscricao).
-
-![Design sem nome (4)](https://github.com/user-attachments/assets/ae157756-5d42-42da-bc54-9f7dc22989ff)
-
