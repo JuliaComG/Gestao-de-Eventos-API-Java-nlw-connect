@@ -56,48 +56,7 @@ O Amigo Secreto é uma aplicação web que permite aos usuários adicionar nomes
 
 ### Pré-requisitos
 
-## Configurando o Docker 
 
-1. Deixe o `Docker Desktop` executando em sua máquina. 
-2. Na pasta do projeto você irá encontrar um arquivo chamado `docker-compose.yml`. Que irá conter as seguintes informações:
-
-docker-compose.yml
-```
-services:
-  mysql:
-    image: mysql:8.4
-    restart: always
-    container_name: mysql-nlw
-    environment:
-      - MYSQL_ROOT_PASSWORD=mysql
-    ports: 
-      - '3306:3306'
-    networks: 
-      - nlw-network
-networks:
-  nlw-network:
-    driver: bridge
-```
-
-3. Entre no terminal do seu sistema operacional. E navegue até o diretório onde está o arquivo `docker-compose.yml`. Então execute o seguinte comando:
-```
-docker compose up
-```
-Assim ele criará o `Network` (rede) e o `Container` e faz o upload do `MySQL`. 
-Agora é só criar a seu Banco de Dados.
-
-### Criando o Banco de dados
-
-1. Acesse o MySQL Workbench
-2. Em `MySQL Connections`, clique em `+`
-3. Então configure ele:
-   - Connection Name: `Mysql NLW Docker`
-4. `Ok`
-5. No ícone da pasta, abra o arquivo do script do banco de dados: `db_events.sql`
-6. E então execute (símbolo do raio)
-7. Pronto o banco de dados esta gerado 
-
-> Para ver o diagrama vá em Database>Reverse Enginneer>Next>Next>selecione o banco desejado>Next>Next>Execute>Next>Finish
 
 
 
@@ -168,7 +127,50 @@ Por isso, o Tomcat é frequentemente chamado de Web Server ou Servlet Container,
 
 ## Banco de dados
 
+### Configurando o Docker 
 
+1. Deixe o `Docker Desktop` executando em sua máquina. 
+2. Na pasta do projeto você irá encontrar um arquivo chamado `docker-compose.yml`. Que irá conter as seguintes informações:
+
+docker-compose.yml
+```
+services:
+  mysql:
+    image: mysql:8.4
+    restart: always
+    container_name: mysql-nlw
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+    ports: 
+      - '3306:3306'
+    networks: 
+      - nlw-network
+networks:
+  nlw-network:
+    driver: bridge
+```
+
+3. Entre no terminal do seu sistema operacional. E navegue até o diretório onde está o arquivo `docker-compose.yml`. Então execute o seguinte comando:
+```
+docker compose up
+```
+Assim ele criará o `Network` (rede) e o `Container` e faz o upload do `MySQL`. 
+Agora é só criar a seu Banco de Dados.
+
+### Criando o Banco de dados
+
+1. Acesse o MySQL Workbench
+2. Em `MySQL Connections`, clique em `+`
+3. Então configure ele:
+   - Connection Name: `Mysql NLW Docker`
+4. `Ok`
+5. No ícone da pasta, abra o arquivo do script do banco de dados: `db_events.sql`
+6. E então execute (símbolo do raio)
+7. Pronto o banco de dados esta gerado 
+
+> Para ver o diagrama vá em Database>Reverse Enginneer>Next>Next>selecione o banco desejado>Next>Next>Execute>Next>Finish
+
+![Design sem nome (3)](https://github.com/user-attachments/assets/2f51400c-20eb-4d68-bd97-0ba5a1e5b8f5)
 
 ## 📋 Rotas da API
 
@@ -248,7 +250,6 @@ Este projeto está sob a licença MIT. Isso significa que você pode utilizá-lo
 
 Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em contato:
 
-- Giulia Armanelli
 - GitHub: JuliaComG
 - Linkdin: https://www.linkedin.com/in/giulia-armanelli/
 - Email: garmanelli.dev@gmail.com
@@ -256,3 +257,6 @@ Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em c
 ## 💖 Créditos e Agradecimentos 
 
 Quero agradecer à [Rocketseat](https://app.rocketseat.com.br/?type=ALL) pelo conhecimento compartilhado e pelas oportunidades proporcionadas por meio do evento [NLW Connect](https://www.rocketseat.com.br/eventos/nlw?utm_source=platform&utm_medium=organic&utm_campaign=lead&utm_term=nlw_19&utm_content=notificacao_plataforma-lp_inscricao).
+
+![Design sem nome (4)](https://github.com/user-attachments/assets/ae157756-5d42-42da-bc54-9f7dc22989ff)
+
