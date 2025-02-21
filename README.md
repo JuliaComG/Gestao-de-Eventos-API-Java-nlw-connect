@@ -15,14 +15,6 @@ Nessa trilha, explorei conceitos fundamentais do e **Java** e **Spring Boot**, m
 
 Ao longo do curso, configurei o ambiente de desenvolvimento, utilizamos o **Spring Initializr** para criar nosso projeto e conectamos a aplicação a um banco de dados **MySQL**.  
 
-
-## ✨ Visão Geral
-
-O Amigo Secreto é uma aplicação web que permite aos usuários adicionar nomes de amigos, realizar o sorteio de pares e visualizar os resultados de diferentes maneiras. A aplicação oferece três modos de visualização do resultado: Modo Simples, Modo Pares e Modo QR Code, garantindo que o sorteio seja feito de forma justa e sigilosa.
-
-## 🌍 Acesse o Projeto
-
-
 ## ✨ Funcionalidades
 
 - 📌 **Inscrição**: O usuário pode se inscrever no evento usando nome e e-mail.
@@ -41,24 +33,13 @@ O Amigo Secreto é uma aplicação web que permite aos usuários adicionar nomes
 
 - **Maven**  
 - **Lombok**
-- **MySQL** 
-- 
+- **MySQL** 8.4
 - **Spring Boot** 3.4.2
 - **Dependências**:
   - Spring Web
   - Spring Data JPA
   - MySQL Driver
   - Spring Boot DevTools
-
-
-
-## 🧠 Como Usar
-
-### Pré-requisitos
-
-
-
-
 
 ## O que é uma API? 
 
