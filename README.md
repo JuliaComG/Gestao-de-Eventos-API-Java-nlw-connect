@@ -250,3 +250,6 @@ Quero agradecer à [Rocketseat](https://app.rocketseat.com.br/?type=ALL) pelo co
 
 ![Design sem nome (4)](https://github.com/user-attachments/assets/ae157756-5d42-42da-bc54-9f7dc22989ff)
 
+![connection db](https://github.com/user-attachments/assets/21aa43d2-9962-4eff-bbd3-de61a7ef5424)
+
+
