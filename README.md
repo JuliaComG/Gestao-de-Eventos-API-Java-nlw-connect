@@ -41,17 +41,15 @@ Ao longo do curso, configurei o ambiente de desenvolvimento, utilizamos o **Spri
   - MySQL Driver
   - Spring Boot DevTools
 
-## Estrutura da API
+# O que é ...
 
-![API Events](https://github.com/user-attachments/assets/a992304e-d61e-4bcd-9649-5aaa5f2c466a)
-
-## O que é uma API? 
+## ... uma API? 
 
 Uma API (do inglês Application Programming Interface, ou Interface de Programação de Aplicações) é um conjunto de regras, protocolos e ferramentas que permite que diferentes sistemas ou componentes de software se comuniquem entre si. Ela define como as solicitações e respostas devem ser estruturadas, permitindo que desenvolvedores integrem funcionalidades de um sistema em outro sem precisar entender todos os detalhes internos de implementação.
 
 > "Ela é um sistema que 'alimenta' outros sistemas, permitindo que eles se comuniquem e troquem informações."
 
-### Framework
+## ... um Framework ?
 Fornece uma estrutura pronta com ferramentas e bibliotecas para facilitar o desenvolvimento de aplicações.
 
 > Estrutura de código pré fabricado.
@@ -65,7 +63,7 @@ O Spring Initializr é uma ferramenta online e também uma integração em IDEs 
 
 > Gera um arquivo .ZIP com o projeto inicial com todas as dependências necessárias para começar a desenvolver uma aplicação Spring Boot.
 
-[Acesse Aqui](https://start.spring.io/)
+Para gerar o seu "pacote": [Acesse Aqui](https://start.spring.io/)
 
 Configurações escolhidas
 ```
@@ -104,22 +102,30 @@ Spring Boot DevTools
     - Reinicia automaticamente a aplicação quando arquivos são alterados (sem precisar parar e iniciar manualmente).
     - Atualiza automaticamente o navegador quando recursos estáticos (como HTML, CSS, JS) são modificados.
 
-### Web Application Server 
+## ... um Web Application Server ?
 Um Web Application Server é um servidor que fornece um ambiente para executar aplicações web. Ele suporta tecnologias como Servlets, JSP (JavaServer Pages), EJB (Enterprise JavaBeans), JMS (Java Message Service) e outras especificações da plataforma Java EE (ou Jakarta EE).
 
-#### Apache Tomcat, ou simplesmente Tomcat
+### Apache Tomcat, ou simplesmente Tomcat
 O Apache Tomcat é tecnicamente um Servlet Container (Contêiner de Servlets) e um JSP Container (Contêiner de JSP). Ele implementa as especificações de Servlet e JSP, que são partes essenciais da plataforma Java EE. No entanto, o Tomcat não implementa todas as especificações Java EE, como EJB, JMS ou JTA (Java Transaction API), que são comuns em servidores de aplicações completos.
 
 Por isso, o Tomcat é frequentemente chamado de Web Server ou Servlet Container, mas também pode ser considerado um Web Application Server leve, já que ele é capaz de executar aplicações web Java, embora com funcionalidades mais limitadas em comparação a servidores de aplicações completos.
 
-## Banco de dados
+## ... um Banco de dados ?
 
-### Configurando o Docker 
+Um banco de dados é um sistema organizado para armazenar, gerenciar e recuperar informações. Imagine uma grande biblioteca onde os livros são os dados, e as prateleiras e catálogos ajudam a encontrar o que você precisa rapidamente. Ele permite que você guarde dados de forma estruturada (como tabelas) e os acesse, atualize ou apague quando necessário. 
+
+### 🐳 Docker
+
+No contexto de bancos de dados, o Docker serve para criar e gerenciar containers que isolam e rodam bancos de dados de forma rápida, portável e consistente. Ele simplifica a configuração de ambientes.
+
+Configurando:
 
 1. Deixe o `Docker Desktop` executando em sua máquina. 
-2. Na pasta do projeto você irá encontrar um arquivo chamado `docker-compose.yml`. Que irá conter as seguintes informações:
+2. Na pasta do projeto `\assets\create_db` você irá encontrar um arquivo chamado `docker-compose.yml`. Que irá conter as seguintes informações:
 
-docker-compose.yml
+<br>
+
+`docker-compose.yml`
 ```
 services:
   mysql:
@@ -141,26 +147,52 @@ networks:
 ```
 docker compose up
 ```
-Assim ele criará o `Network` (rede) e o `Container` e faz o upload do `MySQL`. 
+Assim ele criará a `Network` (rede), o `Container` e faz o upload do `MySQL` para o docker. 
 
 ![docker](https://github.com/user-attachments/assets/88b29584-f596-430c-bd66-63a365715b79)
 
-Agora é só criar a seu Banco de Dados.
+4. Agora é só criar a seu Banco de Dados.
 
-### Criando o Banco de dados
+### 🔢 Criando o Banco de dados
 
 1. Acesse o MySQL Workbench
 2. Em `MySQL Connections`, clique em `+`
 3. Então configure ele:
    - Connection Name: `Mysql NLW Docker`
 4. `Ok`
-5. No ícone da pasta, abra o arquivo do script do banco de dados: `db_events.sql`
-6. E então execute (símbolo do raio)
+5. No ícone da pasta, abra o arquivo do script do banco de dados: `db_events.sql`. Você pode encontrar ele na pasta do projeto `\assets\create_db`
+6. Então execute (símbolo do raio)
 7. Pronto o banco de dados esta gerado 
 
-> Para ver o diagrama vá em Database>Reverse Enginneer>Next>Next>selecione o banco desejado>Next>Next>Execute>Next>Finish
+> Para ver o diagrama vá em Database > Reverse Enginneer > Next > Next > selecione o banco desejado > Next > Next > Execute > Next > Finish
 
-![Design sem nome (3)](https://github.com/user-attachments/assets/2f51400c-20eb-4d68-bd97-0ba5a1e5b8f5)
+### Conectando Código com o Banco de Dados
+
+Requisito: Dependências do `Spring Data JPA`
+Caminho: `\events\src\main\resources`
+Arquivo: `application.properties`
+
+> O maior gargalo de uma aplicação é a comunicação com o banco de dados. Quanto melhor o BD, melhor a aplicação.
+
+ ``` java
+spring.application.name = events
+
+// Nome do usuário do banco de dados
+spring.datasource.username = root 
+
+// Senha do usuário do banco de dados
+spring.datasource.password = root 
+
+// URL do banco de dados
+// Protocolo: jdbc:mysql: <- Eu quero conversar atráves do JPA, pelo protocolo JAva Database Connectivity, usando o driver de conexão do MySQL
+// Máquina: localhost <- A máquina que está rodando o banco de dados
+// Porta: 3336 <- Porta que o banco de dados está escutando (OPCIONAL)
+//Nome da base de dados: db_events
+spring.datasource.url = jdbc:mysql://localhost:3336/db_events
+
+// Configuração do JPA "Qual dialeto estou usando?" = MySQL
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQLDialect
+ ```
 
 ## 📋 Rotas da API
 
@@ -208,18 +240,22 @@ Principais rotas da API:
 
 ### Arquivos e Diretórios
 ```
-EM CONSTRUÇÃO
 Sistema-De-Inscricao-Em-Eventos-API-Java-nlw-connect
 ├── 📂 assets/ 
 │    │   
 ├── 📄 README.md
 
 ```
+### Diagrama de Deployment (Estrutura da API)
 
-### Diagrama de Deployment
+![API Events](https://github.com/user-attachments/assets/a992304e-d61e-4bcd-9649-5aaa5f2c466a)
 
 ### Diagrama Entidade-Relacionamento (DER)
 
+![Design sem nome (3)](https://github.com/user-attachments/assets/2f51400c-20eb-4d68-bd97-0ba5a1e5b8f5)
+
+- Um usuário pode ter várias inscrições em eventos, mas não pode se inscrever em um evento mais de uma vez.
+- Um evento pode ter vários usuários inscritos.
 
 
 ## 🖥️ Contribuição
@@ -232,11 +268,15 @@ Contribuições são bem-vindas! Se você deseja contribuir para este projeto, s
 4. Push para a branch (`git push origin feature/nova-feature`).
 5. Abra um Pull Request.
 
-## 🛡️ Licença
+<img align="right" height="470" src="https://github.com/user-attachments/assets/ae157756-5d42-42da-bc54-9f7dc22989ff">
+
+<p align="left">
+
+### 🛡️ Licença
 
 Este projeto está sob a licença MIT. Isso significa que você pode utilizá-lo, modificá-lo e distribuí-lo livremente, desde que mantenha os créditos.
 
-## 📧 Contato
+### 📧 Contato
 
 Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em contato:
 
@@ -244,9 +284,8 @@ Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em c
 - Linkdin: https://www.linkedin.com/in/giulia-armanelli/
 - Email: garmanelli.dev@gmail.com
 
-## 💖 Créditos e Agradecimentos 
+### 💖 Créditos e Agradecimentos 
 
 Quero agradecer à [Rocketseat](https://app.rocketseat.com.br/?type=ALL) pelo conhecimento compartilhado e pelas oportunidades proporcionadas por meio do evento [NLW Connect](https://www.rocketseat.com.br/eventos/nlw?utm_source=platform&utm_medium=organic&utm_campaign=lead&utm_term=nlw_19&utm_content=notificacao_plataforma-lp_inscricao).
 
-![Design sem nome (4)](https://github.com/user-attachments/assets/ae157756-5d42-42da-bc54-9f7dc22989ff)
-
+</p>
