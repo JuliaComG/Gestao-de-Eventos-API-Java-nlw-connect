@@ -41,6 +41,10 @@ Ao longo do curso, configurei o ambiente de desenvolvimento, utilizamos o **Spri
   - MySQL Driver
   - Spring Boot DevTools
 
+## Estrutura da API
+
+![API Events](https://github.com/user-attachments/assets/a992304e-d61e-4bcd-9649-5aaa5f2c466a)
+
 ## O que é uma API? 
 
 Uma API (do inglês Application Programming Interface, ou Interface de Programação de Aplicações) é um conjunto de regras, protocolos e ferramentas que permite que diferentes sistemas ou componentes de software se comuniquem entre si. Ela define como as solicitações e respostas devem ser estruturadas, permitindo que desenvolvedores integrem funcionalidades de um sistema em outro sem precisar entender todos os detalhes internos de implementação.
