@@ -104,6 +104,8 @@ MySQL Driver
 Spring Boot DevTools
 ```
 
+![springinitializr](https://github.com/user-attachments/assets/dc20d3ae-abf1-4d5d-b879-6c3ff2d4baae)
+
 ###### Dependências
 - Spring Web
   - Suporte para criar aplicações web e APIs RESTful. Ele inclui o Spring MVC (Model-View-Controller), que é um framework para construir aplicações web no ecossistema Spring.
@@ -155,6 +157,9 @@ networks:
 docker compose up
 ```
 Assim ele criará o `Network` (rede) e o `Container` e faz o upload do `MySQL`. 
+
+![docker](https://github.com/user-attachments/assets/88b29584-f596-430c-bd66-63a365715b79)
+
 Agora é só criar a seu Banco de Dados.
 
 ### Criando o Banco de dados
