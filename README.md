@@ -193,6 +193,8 @@ spring.datasource.url = jdbc:mysql://localhost:3306/db_events
 // Configuração do JPA "Qual dialeto estou usando?" = MySQL
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQLDialect
  ```
+Resultado esperado: Conexões criadas com o BD
+![connection db](https://github.com/user-attachments/assets/0623fe35-65e2-40fa-b7c5-8e295791ae88)
 
 ## 📋 Rotas da API
 
