@@ -41,6 +41,69 @@ Ao longo do curso, configurei o ambiente de desenvolvimento, utilizamos o **Spri
   - MySQL Driver
   - Spring Boot DevTools
 
+## 📋 Rotas da API
+
+Principais rotas da API:
+
+🎟️ Eventos
+
+- Criar um evento
+    ```
+    (POST) /events
+    ```
+- Listar todos os eventos
+    ```
+    (GET) /events
+    ```
+- Obter evento por nome formatado
+    ```
+    (GET) /events/{prettyName}
+    ```
+
+📝 Inscrição
+
+- Realizar inscrição no evento
+    ```
+    (POST) /subscription/{prettyName}
+    ```
+- Ver indicações de um usuário específico
+    ```
+    (GET) /subscription/{prettyName}/ranking/{userId}
+    ```
+
+↗️ Rankings
+
+- Visualizar ranking de indicações de um evento
+    ```
+    (GET) /subscription/{prettyName}/ranking/{userId}
+    ```
+- Visualizar ranking de indicações de um usuário específico
+    ```
+    (GET) /subscription/{prettyName}/ranking
+    ```
+
+
+## 📂 Estrutura do Projeto
+
+### Arquivos e Diretórios
+```
+Sistema-De-Inscricao-Em-Eventos-API-Java-nlw-connect
+├── 📂 assets/ 
+│    │   
+├── 📄 README.md
+
+```
+### Diagrama de Deployment (Estrutura da API)
+
+![API Events](https://github.com/user-attachments/assets/a992304e-d61e-4bcd-9649-5aaa5f2c466a)
+
+### Diagrama Entidade-Relacionamento (DER)
+
+![Design sem nome (3)](https://github.com/user-attachments/assets/2f51400c-20eb-4d68-bd97-0ba5a1e5b8f5)
+
+- Um usuário pode ter várias inscrições em eventos, mas não pode se inscrever em um evento mais de uma vez.
+- Um evento pode ter vários usuários inscritos.
+
 # O que é ...
 
 ## ... uma API? 
@@ -366,69 +429,13 @@ private EventRepo eventRepo;
 ```
 
 #### Autowired
+ Injeção de dependência de forma automática. Ela permite que o Spring resolva e injete beans (objetos gerenciados pelo Spring) em sua classe, sem a necessidade de configurar manualmente as dependências.
 
-## 📋 Rotas da API
+Como funciona?
+Quando você anota um campo, método ou construtor com @Autowired, o Spring procura no contexto da aplicação por um bean que corresponda ao tipo da dependência e o injeta automaticamente.
 
-Principais rotas da API:
+![alt text](<Texto do seu parágrafo (4).png>)
 
-🎟️ Eventos
-
-- Criar um evento
-    ```
-    (POST) /events
-    ```
-- Listar todos os eventos
-    ```
-    (GET) /events
-    ```
-- Obter evento por nome formatado
-    ```
-    (GET) /events/{prettyName}
-    ```
-
-📝 Inscrição
-
-- Realizar inscrição no evento
-    ```
-    (POST) /subscription/{prettyName}
-    ```
-- Ver indicações de um usuário específico
-    ```
-    (GET) /subscription/{prettyName}/ranking/{userId}
-    ```
-
-↗️ Rankings
-
-- Visualizar ranking de indicações de um evento
-    ```
-    (GET) /subscription/{prettyName}/ranking/{userId}
-    ```
-- Visualizar ranking de indicações de um usuário específico
-    ```
-    (GET) /subscription/{prettyName}/ranking
-    ```
-
-
-## 📂 Estrutura do Projeto
-
-### Arquivos e Diretórios
-```
-Sistema-De-Inscricao-Em-Eventos-API-Java-nlw-connect
-├── 📂 assets/ 
-│    │   
-├── 📄 README.md
-
-```
-### Diagrama de Deployment (Estrutura da API)
-
-![API Events](https://github.com/user-attachments/assets/a992304e-d61e-4bcd-9649-5aaa5f2c466a)
-
-### Diagrama Entidade-Relacionamento (DER)
-
-![Design sem nome (3)](https://github.com/user-attachments/assets/2f51400c-20eb-4d68-bd97-0ba5a1e5b8f5)
-
-- Um usuário pode ter várias inscrições em eventos, mas não pode se inscrever em um evento mais de uma vez.
-- Um evento pode ter vários usuários inscritos.
 
 
 ## 🖥️ Contribuição
