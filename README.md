@@ -118,9 +118,11 @@ Fornece uma estrutura pronta com ferramentas e bibliotecas para facilitar o dese
 > Estrutura de código pré fabricado.
 
 #### Spring Boot
+---
 Ele faz parte do ecossistema Spring, que é um dos frameworks mais populares para desenvolvimento de aplicações em Java. O Spring Boot foi criado para simplificar o processo de configuração e desenvolvimento de aplicações Spring, permitindo que os desenvolvedores criem aplicações prontas para produção de forma rápida e eficiente.
 
 ##### Spring Initializr
+---
 
 O Spring Initializr é uma ferramenta online e também uma integração em IDEs (como IntelliJ IDEA e Eclipse) que facilita a criação de projetos Spring Boot. Ele permite que você configure rapidamente um projeto Spring Boot, escolhendo as dependências, a linguagem (Java, Kotlin ou Groovy), a versão do Spring Boot e outras configurações básicas. Em seguida, ele gera um projeto inicial (um "esqueleto") que você pode importar e começar a desenvolver.
 
@@ -153,6 +155,7 @@ Spring Boot DevTools
 ![springinitializr](https://github.com/user-attachments/assets/dc20d3ae-abf1-4d5d-b879-6c3ff2d4baae)
 
 ###### Dependências
+---
 - Spring Web
   - Suporte para criar aplicações web e APIs RESTful. Ele inclui o Spring MVC (Model-View-Controller), que é um framework para construir aplicações web no ecossistema Spring.
   - Usa o Apache **Tomcat** como servidor web padrão.
@@ -169,6 +172,7 @@ Spring Boot DevTools
 Um Web Application Server é um servidor que fornece um ambiente para executar aplicações web. Ele suporta tecnologias como Servlets, JSP (JavaServer Pages), EJB (Enterprise JavaBeans), JMS (Java Message Service) e outras especificações da plataforma Java EE (ou Jakarta EE).
 
 ### Apache Tomcat, ou simplesmente Tomcat
+---
 O Apache Tomcat é tecnicamente um Servlet Container (Contêiner de Servlets) e um JSP Container (Contêiner de JSP). Ele implementa as especificações de Servlet e JSP, que são partes essenciais da plataforma Java EE. No entanto, o Tomcat não implementa todas as especificações Java EE, como EJB, JMS ou JTA (Java Transaction API), que são comuns em servidores de aplicações completos.
 
 Por isso, o Tomcat é frequentemente chamado de Web Server ou Servlet Container, mas também pode ser considerado um Web Application Server leve, já que ele é capaz de executar aplicações web Java, embora com funcionalidades mais limitadas em comparação a servidores de aplicações completos.
@@ -178,7 +182,7 @@ Por isso, o Tomcat é frequentemente chamado de Web Server ou Servlet Container,
 Um banco de dados é um sistema organizado para armazenar, gerenciar e recuperar informações. Imagine uma grande biblioteca onde os livros são os dados, e as prateleiras e catálogos ajudam a encontrar o que você precisa rapidamente. Ele permite que você guarde dados de forma estruturada (como tabelas) e os acesse, atualize ou apague quando necessário. 
 
 ### 🐳 Docker
-
+---
 No contexto de bancos de dados, o Docker serve para criar e gerenciar containers que isolam e rodam bancos de dados de forma rápida, portável e consistente. Ele simplifica a configuração de ambientes.
 
 Configurando:
@@ -217,6 +221,7 @@ Assim ele criará a `Network` (rede), o `Container` e faz o upload do `MySQL` pa
 4. Agora é só criar a seu Banco de Dados.
 
 ### 🔢 Criando o Banco de dados
+---
 
 1. Acesse o MySQL Workbench
 2. Em `MySQL Connections`, clique em `+`
@@ -230,6 +235,7 @@ Assim ele criará a `Network` (rede), o `Container` e faz o upload do `MySQL` pa
 > Para ver o diagrama vá em Database > Reverse Enginneer > Next > Next > selecione o banco desejado > Next > Next > Execute > Next > Finish
 
 ### 🔌 Conectando Código com o Banco de Dados
+---
 
 Requisito: Dependências do `Spring Data JPA`
 Caminho: `\events\src\main\resources`
@@ -287,6 +293,7 @@ Cada pacote irá criar uma nova pasta dentro do pacote `br.com.nlw.events`
 ## Criando Classes
 
 ### Model
+---
 
 Objetivos:
 - Declarar variáveis.
@@ -359,6 +366,7 @@ Ele irá criar os métodos getters e setters para todas as variáveis, semelhant
 ```
 
 ### Repository (Repo)
+---
 
 Objetivos:
 
@@ -395,6 +403,7 @@ Com o CrudRepository, você tem acesso aos métodos:
   - deleteAll(): Remove todas as entidades.
 
 ### Service
+---
 
 Objetivos:
 - Regras de negócio
@@ -429,13 +438,96 @@ private EventRepo eventRepo;
 ```
 
 #### Autowired
- Injeção de dependência de forma automática. Ela permite que o Spring resolva e injete beans (objetos gerenciados pelo Spring) em sua classe, sem a necessidade de configurar manualmente as dependências.
+----
+ **Injeção de dependência** de forma automática. Ela permite que o Spring resolva e injete beans (objetos gerenciados pelo Spring) em sua classe, sem a necessidade de configurar manualmente as dependências.
 
 Como funciona?
 Quando você anota um campo, método ou construtor com @Autowired, o Spring procura no contexto da aplicação por um bean que corresponda ao tipo da dependência e o injeta automaticamente.
 
+Vamos fazer um ilustração para compreender melhor como o autowired funciona.
+
 ![alt text](<Texto do seu parágrafo (4).png>)
 
+#### Método Adicionar o Gerador de Pretty Name
+---
+
+Objetivos:
+- Nome Do Meu Evento  -> nome-do-meu-evento
+
+Nome do arquivo: `EventService.java`
+
+Eu vou receber um Evento com alguns dados, e vou salvar no BD com o novo campo adicionado o prettyName.
+
+  ```JAVA
+    public Event addNewEvent (Event event){
+
+        //gerar o Pretty Name
+        event.setPrettyName(event.getTitle().toLowerCase().replaceAll(" ", "-"));
+        return eventRepo.save(event);
+    }
+  ```
+
+![alt text](<Event event.png>)
+
+#### Método Listar Todos os Eventos
+---
+
+Nome do arquivo: `EventService.java`
+
+  ```JAVA
+    public List<Event> getAllEvents(){
+        return (List<Event>)eventRepo.findAll();
+    }
+  ```
+
+#### Método Listar Todos os Eventos pelo Pretty Name
+---
+
+Nome do arquivo: `EventService.java`
+
+  ```JAVA
+    public Event getByPrettyName(String prettyName){
+        return eventRepo.findByPrettyName(prettyName);
+    }
+  ```
+
+  ![alt text](<Texto do seu parágrafo (5).png>)
+
+Nome do arquivo: `EventRepo.java`
+```JAVA
+    public Event findByPrettyName(String prettyName);
+```
+
+  
+##### Spring Data JPA: Palavras-chave de Consulta
+---
+
+Relembrando, a dependência `Spring Data JPA`, é um framework que facilita o acesso a bancos de dados relacionais usando JPA (Java Persistence API). Ele permite que você crie consultas ao banco de dados de forma simples, sem precisar escrever SQL manualmente. Em vez disso, você pode definir métodos em uma interface, e o Spring Data JPA gera automaticamente as consultas com base no nome desses métodos.
+
+No nosso projeto, esses métodos são definidos interface `EventRepo`.
+
+Ao utilizar `findByPrettyName`, estamos usando uma funcionalidade chamada `palavras-chave de consulta` (eng: Query subject keywords), que são termos que você usa no nome dos métodos para dizer ao Spring Data JPA como ele deve construir a consulta ao banco de dados. Por exemplo, se você quiser buscar todos os usuários com um determinado sobrenome, pode criar um método chamado findByLastName, e o Spring Data JPA vai gerar automaticamente a consulta SQL correspondente.
+
+```JAVA
+List<User> findByLastName(String lastName);
+```
+
+> Nome do Método = Consulta Automática
+
+```sql
+SELECT * FROM User WHERE last_name = ?;
+```
+
+Palavras-Chave Comuns: findBy   | readBy   | getBy   | queryBy  | searchBy | streamBy | existsBy | countBy | deleteBy | removeby | LessThan | GreaterThan | ...
+
+
+
+
+
+
+
+
+Documentação sobre esse assunto: [Acessse aqui](https://docs.spring.io/spring-data/jpa/reference/repositories/query-keywords-reference.html#appendix.query.method.subject)
 
 
 ## 🖥️ Contribuição
