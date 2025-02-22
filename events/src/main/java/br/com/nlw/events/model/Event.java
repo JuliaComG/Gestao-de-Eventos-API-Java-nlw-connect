@@ -11,11 +11,6 @@ import jakarta.persistence.Entity;
 @Table(name = "tbl_event")
 public class Event {
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "event_id")
-    private Integer eventId;
-
     public Integer getEventId() {
         return eventId;
     }
@@ -87,6 +82,11 @@ public class Event {
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column (name = "event_id")
+    private Integer eventId;
 
     @Column (name = "title", length = 255, nullable = false)
     private String title;
