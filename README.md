@@ -290,7 +290,7 @@ Cada pacote irá criar uma nova pasta dentro do pacote `br.com.nlw.events`
 
 ![](image-1.png)
 
-## Criando Classes
+## Criando Classes para Evento
 
 ### Model
 ---
@@ -301,6 +301,8 @@ Objetivos:
 - Criar métodos getters e setters.
 
 Tipo: `Java Class`
+
+Pasta: `model`
 
 Nome do arquivo: `Event.java`
 
@@ -372,6 +374,8 @@ Objetivos:
 
 Tipo: `Interface`
 
+Pasta: `repo`
+
 Nome do arquivo: `EventRepo.java`
 
 1. Adicione a extensão `CrudRepository`. Ela pede dois parâmetros:
@@ -412,6 +416,8 @@ Objetivos:
 - Recuperar pelo `prettyName`
 
 Tipo: `Java Class`
+
+Pasta: `service`	
 
 Nome do arquivo: `EventService.java`
 
@@ -491,14 +497,13 @@ Nome do arquivo: `EventService.java`
     }
   ```
 
-  ![alt text](<Texto do seu parágrafo (5).png>)
+![alt text](<Texto do seu parágrafo (6).png>)
 
 Nome do arquivo: `EventRepo.java`
 ```JAVA
     public Event findByPrettyName(String prettyName);
 ```
 
-  
 ##### Spring Data JPA: Palavras-chave de Consulta
 ---
 
@@ -520,14 +525,247 @@ SELECT * FROM User WHERE last_name = ?;
 
 Palavras-Chave Comuns: findBy   | readBy   | getBy   | queryBy  | searchBy | streamBy | existsBy | countBy | deleteBy | removeby | LessThan | GreaterThan | ...
 
-
-
-
-
-
-
-
 Documentação sobre esse assunto: [Acessse aqui](https://docs.spring.io/spring-data/jpa/reference/repositories/query-keywords-reference.html#appendix.query.method.subject)
+
+### Controller
+---
+
+Tipo: `Java Class`
+
+Pasta: `controller`
+
+Nome do arquivo: `EventController.java`
+
+Como o SpringBoot sabe que o `EventController` é um controller? 
+só colocar a anotação:
+
+```JAVA
+@RestController
+```
+
+#### Método POST
+---
+```JAVA
+    @PostMapping("/events")
+    public Event addNewEvent (@RequestBody Event newEvent) {
+        return service.addNewEvent(newEvent);
+    }
+```
+
+
+#### Método GET todos os eventos
+---
+```JAVA
+    public List<Event> getAllEvents(){
+        return service.getAllEvents();
+    }
+```
+
+#### Método GET pelo Pretty Name
+---
+```JAVA
+    @GetMapping("/events/{prettyName}")
+    public ResponseEntity<Event> getEventByPrettyName(@PathVariable String prettyName){
+        Event evt = service.getByPrettyName(prettyName);
+        if (evt != null){ //Evento EXISTE no BD
+            return ResponseEntity.ok().body(evt);
+        }
+        return ResponseEntity.notFound().build();
+    }
+```
+
+Aqui foi feito um tratamento para mostrar o `erro 404` caso o evento não exista.
+
+![alt text](<Texto do seu parágrafo (8).png>)
+
+### Postman 
+---
+
+Para testar API.
+
+> Outros que fazem a mesma coisa: Thunder Client; Insomnia;...
+
+Não é necesário criar um frontend para testar a API. Você pode utilizar uma ferramente como o Postman para testar a API.
+
+
+- Criar um evento
+    ```
+    (POST) /events
+    ```
+
+  ![alt text](<Texto do seu parágrafo (7).png>)
+
+  Exemplo:
+
+  ```JSON
+  Entrada
+  {
+      "title":"Imersao C Plus Plus 2025",
+      "location":"Online",
+      "price":0.0,
+      "startDate":"2025-04-16",
+      "endDate":"2025-04-18",
+      "startTime":"19:00:00",
+      "endTime":"21:00:00"
+  }
+
+  Saida
+  {
+      "eventId": 8,
+      "title": "Imersao C Plus Plus 2025",
+      "prettyName": "imersao-c-plus-plus-2025",
+      "location": "Online",
+      "price": 0.0,
+      "startDate": "2025-04-16",
+      "endDate": "2025-04-18",
+      "startTime": "19:00:00",
+      "endTime": "21:00:00"
+  }
+
+- Listar todos os eventos
+    ```
+    (GET) /events
+    ```
+
+  ```JSON
+  // Saida
+  [
+    {
+        "eventId": 5,
+        "title": "CodeCraft Summit 2025",
+        "prettyName": "codecraft-summit-2025",
+        "location": "Online",
+        "price": 0.0,
+        "startDate": "2025-03-16",
+        "endDate": "2025-03-18",
+        "startTime": "19:00:00",
+        "endTime": "21:00:00"
+    },
+    {
+        "eventId": 6,
+        // ... restante dos daddos do evento
+    },
+    {
+        "eventId": 7,
+        // ... restante dos daddos do evento
+    },
+    {
+        "eventId": 8,
+        // ... restante dos daddos do evento
+    }
+  ]
+
+- Obter evento pelo Pretty Name
+   
+    ```
+    (GET) /events/{prettyName}
+    ```
+
+    ```JSON
+    // Emtrada (GET) /events/imersao-java-2025
+    // Saida
+    {
+      "eventId": 6,
+      "title": "Imersao Java 2025",
+      "prettyName": "imersao-java-2025",
+      "location": "Online",
+      "price": 0.0,
+      "startDate": "2025-04-16",
+      "endDate": "2025-04-18",
+      "startTime": "19:00:00",
+      "endTime": "21:00:00"
+  }
+    ```
+
+## Criando Classes para Usuário
+
+### Model
+
+Tipo: `Java Class`
+
+Pasta: `model`
+
+Nome do arquivo: `User.java`
+
+Inicie as variáveis e indique qual coluna do banco de dados ela irá mapear.
+
+![alt text](<Texto do seu parágrafo (9).png>)
+
+Depois criei os Setters e Getters para cada uma das variáveis.
+
+### Repository
+
+Tipo: `Java Interface`
+
+Pasta: `Repo`
+
+Nome do arquivo: `UserRepo.java`
+
+## Criando Classes para Inscrição
+
+### Model 
+
+Tipo: `Java Class`
+
+Pasta: `model`
+
+Nome do arquivo: `User.java`
+
+Na tabela `tbl_subscription` existem 2 chaves estrangeiras: `subscribed_user_id` e `event_id`.
+
+
+
+
+
+![alt text](<Texto do seu parágrafo (10).png>)
+
+![alt text](<Texto do seu parágrafo (12).png>)
+
+![alt text](<Texto do seu parágrafo (13).png>)
+
+![alt text](<Texto do seu parágrafo (14).png>)
+
+![alt text](<Texto do seu parágrafo (15).png>)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## 🖥️ Contribuição
@@ -541,6 +779,9 @@ Contribuições são bem-vindas! Se você deseja contribuir para este projeto, s
 5. Abra um Pull Request.
 
 <img align="right" height="470" src="https://github.com/user-attachments/assets/ae157756-5d42-42da-bc54-9f7dc22989ff">
+
+
+
 
 <p align="left">
 
