@@ -99,7 +99,7 @@ Sistema-De-Inscricao-Em-Eventos-API-Java-nlw-connect
 
 ### Diagrama Entidade-Relacionamento (DER)
 
-![Design sem nome (3)](https://github.com/user-attachments/assets/2f51400c-20eb-4d68-bd97-0ba5a1e5b8f5)
+![Texto do seu parágrafo (16)](https://github.com/user-attachments/assets/e70297fb-32c0-4644-bf7a-68894ebaed6a)
 
 - Um usuário pode ter várias inscrições em eventos, mas não pode se inscrever em um evento mais de uma vez.
 - Um evento pode ter vários usuários inscritos.
