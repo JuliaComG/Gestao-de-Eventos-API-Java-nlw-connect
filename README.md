@@ -716,11 +716,7 @@ Nome do arquivo: `User.java`
 
 Na tabela `tbl_subscription` existem 2 chaves estrangeiras: `subscribed_user_id` e `event_id`.
 
-
-
-
-
-![Texto do seu parágrafo (10)](https://github.com/user-attachments/assets/2e61a736-74d1-4820-a266-6b3027f2e832)
+![Texto do seu parágrafo (17)](https://github.com/user-attachments/assets/f835e158-dc08-4e38-8385-91aa73b39cee)
 
 ![Texto do seu parágrafo (12)](https://github.com/user-attachments/assets/6b0c9156-09ed-4daf-aeed-fb40dee2a683)
 
@@ -729,7 +725,6 @@ Na tabela `tbl_subscription` existem 2 chaves estrangeiras: `subscribed_user_id`
 ![Texto do seu parágrafo (14)](https://github.com/user-attachments/assets/a6a34f52-80cc-4e37-8e29-8721c688cb3c)
 
 ![Texto do seu parágrafo (15)](https://github.com/user-attachments/assets/c5f6afd1-84ca-44fa-bb7b-506eebe020f5)
-
 
 
 ## 🖥️ Contribuição
