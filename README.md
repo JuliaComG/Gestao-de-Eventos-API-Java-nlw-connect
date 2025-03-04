@@ -274,11 +274,18 @@ Então vamos criar os pacotes:
 - Repository
 - Model
 
+![calsses](https://github.com/user-attachments/assets/c5205446-4faa-4e33-a91f-8570e63275c6)
+
+
 ![alt text](calsses.png)
 
 Primeiro temos que estar no caminho correto: `\events\src\main\java\br\com\nlw\events`
 
 E crie um novo pacote:
+
+![image](https://github.com/user-attachments/assets/f43a608c-d7c8-4cb4-b71e-bd057cf5df85)
+
+
 ![alt text](image.png)
 
 - `.controller`
@@ -287,6 +294,8 @@ E crie um novo pacote:
 - `.model`
 
 Cada pacote irá criar uma nova pasta dentro do pacote `br.com.nlw.events`
+
+![image-1](https://github.com/user-attachments/assets/803c1879-87d6-46d8-8ba8-3ad6f22f25eb)
 
 ![](image-1.png)
 
@@ -310,9 +319,15 @@ Nome do arquivo: `Event.java`
 
   Veja o Exemplo:
 
+![Design sem nome (5)](https://github.com/user-attachments/assets/3e7b13fd-8b85-4734-b9f3-90c58e03727b)
+
+
   ![alt text](<Design sem nome (5).png>)
 
   Possível problema:
+
+![image-2](https://github.com/user-attachments/assets/1691468d-32a9-46e4-9c10-4d4c49c1f609)
+
 
   ![alt text](image-2.png)
 
@@ -345,13 +360,22 @@ Nome do arquivo: `Event.java`
 
 Vá no menu Code > Generate >
 
+![image-3](https://github.com/user-attachments/assets/778775e1-f349-4bd5-99b2-12ca47d0e108)
+
+
 ![alt text](image-3.png)
 
 .> Getter and Setter >
 
+![image-4](https://github.com/user-attachments/assets/e463a6cd-73cb-486a-a574-8124a101ecfe)
+
+
 ![alt text](image-4.png)
 
 .> Selecionar todas as variáveis > Ok
+
+![image-5](https://github.com/user-attachments/assets/03b8e186-9964-48df-8fa5-7fe21819be3d)
+
 
 ![alt text](image-5.png)
 
@@ -452,6 +476,8 @@ Quando você anota um campo, método ou construtor com @Autowired, o Spring proc
 
 Vamos fazer um ilustração para compreender melhor como o autowired funciona.
 
+![Texto do seu parágrafo (4)](https://github.com/user-attachments/assets/fc3bed5e-e10b-448d-bab7-adff4bee5428)
+
 ![alt text](<Texto do seu parágrafo (4).png>)
 
 #### Método Adicionar o Gerador de Pretty Name
@@ -472,6 +498,9 @@ Eu vou receber um Evento com alguns dados, e vou salvar no BD com o novo campo a
         return eventRepo.save(event);
     }
   ```
+
+![Event event](https://github.com/user-attachments/assets/c9fc9339-8934-4873-af4f-06bbb70accfc)
+
 
 ![alt text](<Event event.png>)
 
@@ -496,6 +525,9 @@ Nome do arquivo: `EventService.java`
         return eventRepo.findByPrettyName(prettyName);
     }
   ```
+
+![Texto do seu parágrafo (6)](https://github.com/user-attachments/assets/f754be15-c0c1-441b-9421-0b04a33d9a06)
+
 
 ![alt text](<Texto do seu parágrafo (6).png>)
 
@@ -576,6 +608,8 @@ só colocar a anotação:
 
 Aqui foi feito um tratamento para mostrar o `erro 404` caso o evento não exista.
 
+![Texto do seu parágrafo (8)](https://github.com/user-attachments/assets/50226337-0afa-41cc-80c0-b7e1b3b60159)
+
 ![alt text](<Texto do seu parágrafo (8).png>)
 
 ### Postman 
@@ -592,6 +626,9 @@ Não é necesário criar um frontend para testar a API. Você pode utilizar uma 
     ```
     (POST) /events
     ```
+
+![Texto do seu parágrafo (7)](https://github.com/user-attachments/assets/57efad9f-24c4-41e4-bf62-8829f624315c)
+
 
   ![alt text](<Texto do seu parágrafo (7).png>)
 
@@ -689,6 +726,9 @@ Nome do arquivo: `User.java`
 
 Inicie as variáveis e indique qual coluna do banco de dados ela irá mapear.
 
+![Texto do seu parágrafo (9)](https://github.com/user-attachments/assets/9942f6b7-d441-4f12-b8c3-dc5f96db4b54)
+
+
 ![alt text](<Texto do seu parágrafo (9).png>)
 
 Depois criei os Setters e Getters para cada uma das variáveis.
@@ -717,13 +757,31 @@ Na tabela `tbl_subscription` existem 2 chaves estrangeiras: `subscribed_user_id`
 
 
 
+![Texto do seu parágrafo (10)](https://github.com/user-attachments/assets/2e61a736-74d1-4820-a266-6b3027f2e832)
+
 ![alt text](<Texto do seu parágrafo (10).png>)
+
+
+
+![Texto do seu parágrafo (12)](https://github.com/user-attachments/assets/6b0c9156-09ed-4daf-aeed-fb40dee2a683)
 
 ![alt text](<Texto do seu parágrafo (12).png>)
 
+
+
+![Texto do seu parágrafo (13)](https://github.com/user-attachments/assets/2759a304-d7d9-4b0b-8989-d083ba3e8c7d)
+
 ![alt text](<Texto do seu parágrafo (13).png>)
 
+
+
+![Texto do seu parágrafo (14)](https://github.com/user-attachments/assets/a6a34f52-80cc-4e37-8e29-8721c688cb3c)
+
 ![alt text](<Texto do seu parágrafo (14).png>)
+
+
+
+![Texto do seu parágrafo (15)](https://github.com/user-attachments/assets/c5f6afd1-84ca-44fa-bb7b-506eebe020f5)
 
 ![alt text](<Texto do seu parágrafo (15).png>)
 
