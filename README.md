@@ -9,6 +9,37 @@ Bem-vindo a API para Gestão de Eventos, um projeto desenvolvido com objetivo de
 
 ![image](https://github.com/user-attachments/assets/7387498d-40eb-468c-8032-11dc8905acd1)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 🚧 Em construção... 🚧
 
 Nessa trilha, explorei conceitos fundamentais do e **Java** e **Spring Boot**, mergulhando na prática para construir uma aplicação completa de **inscrição em eventos**.  
@@ -81,6 +112,17 @@ Principais rotas da API:
     ```
     (GET) /subscription/{prettyName}/ranking
     ```
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## 📂 Estrutura do Projeto
@@ -274,6 +316,8 @@ Então vamos criar os pacotes:
 - Repository
 - Model
 
+Obs: No exemplo está sendo criado somente para o evento, mas o mesmo deve ser feito para as outras entidades.
+
 ![calsses](https://github.com/user-attachments/assets/c5205446-4faa-4e33-a91f-8570e63275c6)
 
 Primeiro temos que estar no caminho correto: `\events\src\main\java\br\com\nlw\events`
@@ -293,6 +337,94 @@ Cada pacote irá criar uma nova pasta dentro do pacote `br.com.nlw.events`
 
 
 ## Criando Classes para Evento
+
+
+### US00 - CRUD de Evento
+
+Este User Story é necessário para subsidiar os User Stories e Requisitos Funcionais existentes
+
+Algumas funcionalidades para gerenciarmos eventos
+
+- Criação de um novo evento
+- Listagem de todos os eventos disponíveis
+- Recuperação dos detalhes de um determinado evento pelo ID
+- Recuperação dos detalhes de um determinado evento pelo seu Pretty Name
+
+<br>
+Endpoint: `POST /events`
+
+Descrição: Cria um novo evento
+
+```json
+Requisição
+{
+		"title":"CodeCraft Summit 2025",
+		"location":"Online",
+		"price":0.0,
+		"startDate":"2025-03-16",
+		"endDate":"2025-03-18",
+		"startTime":"19:00:00",
+		"endTime":"21:00:00"
+}
+
+Resposta 
+{
+	  "id": 1,
+		"title":"CodeCraft Summit 2025",
+		"prettyName":"codecraft-summit-2025",
+		"location":"Online",
+		"price":0.0,
+		"startDate":"2025-03-16",
+		"endDate":"2025-03-18",
+		"startTime":"19:00:00",
+		"endTime":"21:00:00"
+}
+```
+
+<br>
+
+Endpoint: `GET /events`
+
+Descrição: Lista todos os eventos
+
+```json
+Resposta:
+[{
+	  "id": 1,
+		"title":"CodeCraft Summit 2025",
+		"prettyName":"codecraft-summit-2025",
+		"location":"Online",
+		"price":0.0,
+		"startDate":"2025-03-16",
+		"endDate":"2025-03-18",
+		"startTime":"19:00:00"
+		"endTime":"21:00:00"
+},
+ETC...
+]
+```
+<br>
+
+Endpoint: `GET /events/PRETTY_NAME`
+
+Descrição: Recupera um evento pelo seu Pretty Name
+
+Exemplo: http://localhost:8080/events/codecraft-summit-2025
+
+```json
+Resposta:
+{
+	  "id": 1,
+		"title":"CodeCraft Summit 2025",
+		"prettyName":"codecraft-summit-2025",
+		"location":"Online",
+		"price":0.0,
+		"startDate":"2025-03-16",
+		"endDate":"2025-03-18",
+		"startTime":"19:00:00"
+		"endTime":"21:00:00"
+}
+```
 
 ### Model
 ---
@@ -704,7 +836,111 @@ Pasta: `Repo`
 
 Nome do arquivo: `UserRepo.java`
 
-## Criando Classes para Inscrição
+Criar uma interface para buscar o usuário no banco de dados por e-mail, pois é a "única" forma de identificar o usuário.
+
+```Java
+public interface UserRepo extends CrudRepository<User, Interger> {
+    public User findByEmail (String email);
+}
+```
+
+## Criando Classes para Inscrição (Autonoma e por Indicação)
+
+### US01 - Realizar Inscrição
+
+Este User Story atende aos requisitos funcionais RF01 e RF02
+
+```
+Endpoint: POST /subscription/PRETTY_NAME
+```
+
+- O usuário poderá fazer inscrição em um evento previamente cadastrado na base de dados, informando seu nome e seu email
+- Como é um sistema onde podemos ter vários eventos, pode acontecer de um usuário já estar em nossa base de dados por ter participado de eventos anteriores. Dessa forma, basta recuperar seus dados e realizar a inscrição
+- O Usuário não pode se inscrever duas vezes no mesmo evento. Se houver já uma inscrição no respectivo evento pelo usuário, uma mensagem de erro deverá ser enviada (conflict)
+- Ao final da realização da inscrição, a resposta será um JSON com o número da inscrição no evento
+
+Requisição Esperada
+
+```json
+{
+   "userName":"John Doe",
+   "email":"john@doe.com"
+}
+```
+
+OU
+
+```json
+{ 
+  "subscriptionNumber":1,
+	"designation": "https://devstage.com/codecraft-summit-2025/123"
+}
+```
+
+**Casos de uso:**
+
+**Caso base:**
+
+Condições: Evento previamente cadastrado, Usuário ainda inexistente (email não existe)
+
+Ações:
+
+- Inserir usuário na base
+- Adicionar nova inscrição para o usuário
+- Retornar o resultado da inscrição contendo o ID e o link para indicação
+
+**Caso Alternativo 1:**
+
+Condições: Usuário existe na base, porém não há inscrição dele
+
+Ações:
+
+- Recuperar usuário da base
+- Adiciona nova inscrição para o usuário
+- Retornar o resultado da inscrição contendo o ID e o link para indicação
+
+**Caso Alternativo 2:**
+
+Condições: Evento não existe
+
+Ações: 
+
+- Lançar uma exceção `EventNotFound` indicando que o evento não existe
+
+**Caso Alternativo 3:**
+
+Condições: Já existe inscrição do usuário no evento
+
+Ações:
+
+- Lançar uma exceção indicando conflito
+
+### Entendendo um pouco mais sobre o banco de dados
+
+Para compreender melhor a tabela de inscrição, precisamos entender como o banco de dados está estruturado.
+
+![Texto do seu parágrafo (10)](https://github.com/user-attachments/assets/2e61a736-74d1-4820-a266-6b3027f2e832)
+
+Dentro da tabela `tbl_subscription` temos 2 chaves estrangeiras: `subscribed_user_id` e `event_id`. Sendo que a `indication_user_id` está vinculada com o `subscribed_user_id`. Então está tabela é basicamente composta com chaves estrangeiras.
+
+E nela podemos observar algumas informações importantes:
+
+![Texto do seu parágrafo (12)](https://github.com/user-attachments/assets/6b0c9156-09ed-4daf-aeed-fb40dee2a683)
+
+Abaixo criei uma pequena ilustração para melhorar a compreensão de como funciona a lógica da tabela de inscrição.
+
+Em relação ao usuário:
+
+![Texto do seu parágrafo (13)](https://github.com/user-attachments/assets/2759a304-d7d9-4b0b-8989-d083ba3e8c7d)
+
+Em relação a um evento:
+
+![Texto do seu parágrafo (14)](https://github.com/user-attachments/assets/a6a34f52-80cc-4e37-8e29-8721c688cb3c)
+
+Em relação a um usuário que indicou outro usuário:
+
+![Texto do seu parágrafo (15)](https://github.com/user-attachments/assets/c5f6afd1-84ca-44fa-bb7b-506eebe020f5)
+
 
 ### Model 
 
@@ -712,24 +948,279 @@ Tipo: `Java Class`
 
 Pasta: `model`
 
+Nome do arquivo: `Subscription.java`
+
+Baseada na explicação acima, criei a classe `Subscription` com os atributos necessários para a criação de uma inscrição.
+
+![alt text](<Texto do seu parágrafo (1).png>)
+
+
+### Repository (Repo)
+---
+
+Tipo: `Interface`
+
+Pasta: `repo`
+
+Nome do arquivo: `SubscriptionRepo.java`
+
+```Java
+
+```
+
+### Service
+---
+
+Tipo: `Java Class`
+
+Pasta: `model`
+
+Nome do arquivo: `SubscriptionService.java`
+
+```Java
+@Service
+public class SubscriptionService {
+
+    @Autowired
+    private EventRepo evtRepo;
+
+    @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
+    private SubscriptionRepo subRepo;
+
+
+    public Subscription createNewSubscription (String eventName, User user){
+
+        
+        Event evt = evtRepo.findByPrettyName(eventName); //recuperar o evento pelo nome
+        user = userRepo.save(user); //salvar o usuário no bd
+
+        Subscription subs = new Subscription();
+        subs.setEvent(evt);
+        subs.setSubscriber(user);
+      
+        //grava no bd
+        Subscription res = subRepo.save(subs);
+        return res;
+    }
+}
+```
+
+Obs: Aqui não foi feita nenhuma validação de dados.
+
+### Controller
+---
+
+Tipo: `Java Class`
+
+Pasta: `model`
+
+Nome do arquivo: `SubscriptionController.java`
+
+```Java
+@RestController
+public class SubscriptionController {
+
+    @Autowired
+    private SubscriptionService service;
+
+    @PostMapping("/subscription/{prettyName}")
+    public ResponseEntity<Subscription> createSubscription (@PathVariable String prettyName, @RequestBody User subscriber){
+        Subscription res = service.createNewSubscription(prettyName, subscriber);
+
+        if (res != null){
+            return ResponseEntity.ok(res);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+}
+```
+
+#### Postman
+
+- Adicionar usuário ao evento 
+
+    ```
+    (POST) /events/subscription/{prettyName}
+    ```
+
+    Entrada:
+    ```JSON
+    // Entrada (POST) /events/subscription/{prettyName}
+    {
+    "name": "Giulia",
+    "email": "giulia@email.com"
+    }
+
+    // Saida
+    {
+    "subscriptionNumber": 1,
+    "event": {
+        "eventId": 6,
+        "title": "Imersao Java 2025",
+        "prettyName": "imersao-java-2025",
+        "location": "Online",
+        "price": 0.0,
+        "startDate": "2025-04-16",
+        "endDate": "2025-04-18",
+        "startTime": "19:00:00",
+        "endTime": "21:00:00"
+    },
+    "subscriber": {
+        "id": 1,
+        "name": "Giulia",
+        "email": "giulia@email.com"
+    },
+    "indication": null
+    }
+    ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Criando Classes para Ranking
+
+### US02 - Gerar Ranking de Inscritos
+
+Este User Story atende ao requisito Funcional RF03
+
+```
+Endpoint: GET /subscription/PRETT_NAME/ranking
+```
+
+- Possibilidade de gerar um ranking de número de inscritos por indicação (ou seja, ordenado pela somatória de inscritos por indicação)
+- Ideal: o ranking exibir os 3 primeiros colocados (gold, silver e bronze)
+
+```json
+http://localhost:8080/subscription/codecraft-summit-2025/ranking
+[
+	{
+		"userName":"John Doe",
+		"subscribers":1000
+	},
+	{
+		"userName":"Mary Page",
+		"subscribers":873	
+	},
+	{
+		"userName":"Frank Lynn",
+		"subscribers":690	
+	}
+]
+```
+
+
+### Model
+
+Tipo: `Java Class`
+
+Pasta: `model`
+
 Nome do arquivo: `User.java`
 
-Na tabela `tbl_subscription` existem 2 chaves estrangeiras: `subscribed_user_id` e `event_id`.
+### Service
+---
+
+Objetivos:
+- Regras de negócio
+- Cadastrar
+- Recuperar todo mundo
+- Recuperar pelo `prettyName`
+
+Tipo: `Java Class`
+
+Pasta: `service`	
+
+Nome do arquivo: `EventService.java`
+
+### Controller
+---
+
+Tipo: `Java Class`
+
+Pasta: `controller`
+
+Nome do arquivo: `EventController.java`
 
 
+## Criando Classes para Estatisticas
 
+### US03 - Gerar Estatísticas de número de inscritos por participante
 
+Este User Story atende ao requisito Funcional RF04
 
-![Texto do seu parágrafo (10)](https://github.com/user-attachments/assets/2e61a736-74d1-4820-a266-6b3027f2e832)
+```json
+Endpoint: GET /subscription/PRETTY_NAME/ranking/USERID
+```
 
-![Texto do seu parágrafo (12)](https://github.com/user-attachments/assets/6b0c9156-09ed-4daf-aeed-fb40dee2a683)
+Recuperar o número de inscritos que efetivaram sua participação no evento indicados por um determinado usuário (USERID), bem como sua colocação no ranking geral.
 
-![Texto do seu parágrafo (13)](https://github.com/user-attachments/assets/2759a304-d7d9-4b0b-8989-d083ba3e8c7d)
+```json
+http://localhost:8080/subscription/codecraft-summit-2025/ranking/123
+{
+	"rankingPosition":3,
+	{
+			"userId":123,
+			"name":"John Doe",
+			"count":600
+	}
+}
+```
 
-![Texto do seu parágrafo (14)](https://github.com/user-attachments/assets/a6a34f52-80cc-4e37-8e29-8721c688cb3c)
+### Model
 
-![Texto do seu parágrafo (15)](https://github.com/user-attachments/assets/c5f6afd1-84ca-44fa-bb7b-506eebe020f5)
+Tipo: `Java Class`
 
+Pasta: `model`
+
+Nome do arquivo: `User.java`
+
+### Service
+---
+
+Objetivos:
+- Regras de negócio
+- Cadastrar
+- Recuperar todo mundo
+- Recuperar pelo `prettyName`
+
+Tipo: `Java Class`
+
+Pasta: `service`	
+
+Nome do arquivo: `EventService.java`
+
+### Controller
+---
+
+Tipo: `Java Class`
+
+Pasta: `controller`
+
+Nome do arquivo: `EventController.java`
 
 
 ## 🖥️ Contribuição

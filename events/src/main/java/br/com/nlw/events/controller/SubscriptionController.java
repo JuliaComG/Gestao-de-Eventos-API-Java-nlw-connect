@@ -1,0 +1,4 @@
+package br.com.nlw.events.controller;
+
+public class SubscriptionController {
+}
