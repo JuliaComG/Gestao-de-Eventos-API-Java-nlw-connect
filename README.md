@@ -1165,6 +1165,7 @@ Pasta: `controller`
 
 Nome do arquivo: `EventController.java`
 
+<<<<<<< HEAD
 
 ## Criando Classes para Estatisticas
 
@@ -1175,6 +1176,9 @@ Este User Story atende ao requisito Funcional RF04
 ```json
 Endpoint: GET /subscription/PRETTY_NAME/ranking/USERID
 ```
+=======
+![Texto do seu parágrafo (17)](https://github.com/user-attachments/assets/f835e158-dc08-4e38-8385-91aa73b39cee)
+>>>>>>> a70a8657f105c0c116bec0383135a66d9f117808
 
 Recuperar o número de inscritos que efetivaram sua participação no evento indicados por um determinado usuário (USERID), bem como sua colocação no ranking geral.
 
@@ -1221,7 +1225,6 @@ Tipo: `Java Class`
 Pasta: `controller`
 
 Nome do arquivo: `EventController.java`
-
 
 ## 🖥️ Contribuição
 
